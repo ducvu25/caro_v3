@@ -383,21 +383,21 @@
             this.txtTimePlayer2.Location = new System.Drawing.Point(528, 89);
             this.txtTimePlayer2.Margin = new System.Windows.Forms.Padding(2);
             this.txtTimePlayer2.Name = "txtTimePlayer2";
+            this.txtTimePlayer2.ReadOnly = true;
             this.txtTimePlayer2.Size = new System.Drawing.Size(76, 20);
             this.txtTimePlayer2.TabIndex = 8;
             this.txtTimePlayer2.Text = "Time";
             this.txtTimePlayer2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtTimePlayer2.ReadOnly = true;
             // 
             // txtTimePlayer1
             // 
             this.txtTimePlayer1.Location = new System.Drawing.Point(108, 89);
             this.txtTimePlayer1.Margin = new System.Windows.Forms.Padding(2);
             this.txtTimePlayer1.Name = "txtTimePlayer1";
+            this.txtTimePlayer1.ReadOnly = true;
             this.txtTimePlayer1.Size = new System.Drawing.Size(76, 20);
             this.txtTimePlayer1.TabIndex = 7;
             this.txtTimePlayer1.Text = "time";
-            this.txtTimePlayer1.ReadOnly = true;
             // 
             // txtMess
             // 
@@ -406,11 +406,11 @@
             this.txtMess.Location = new System.Drawing.Point(246, 89);
             this.txtMess.Margin = new System.Windows.Forms.Padding(2);
             this.txtMess.Name = "txtMess";
+            this.txtMess.ReadOnly = true;
             this.txtMess.Size = new System.Drawing.Size(210, 26);
             this.txtMess.TabIndex = 6;
             this.txtMess.Text = "Good !";
             this.txtMess.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtMess.ReadOnly = true;
             // 
             // panel6
             // 
@@ -471,9 +471,9 @@
             this.txtNamePlayer1.Location = new System.Drawing.Point(108, 46);
             this.txtNamePlayer1.Margin = new System.Windows.Forms.Padding(2);
             this.txtNamePlayer1.Name = "txtNamePlayer1";
+            this.txtNamePlayer1.ReadOnly = true;
             this.txtNamePlayer1.Size = new System.Drawing.Size(199, 29);
             this.txtNamePlayer1.TabIndex = 0;
-            this.txtNamePlayer1.ReadOnly = true;
             // 
             // panel2
             // 
@@ -482,6 +482,8 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(710, 320);
             this.panel2.TabIndex = 1;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form3_MouseClick);
             // 
             // Form3
             // 
