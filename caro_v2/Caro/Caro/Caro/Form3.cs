@@ -146,7 +146,7 @@ namespace Caro
                     }
                 }
                 // Kiểm tra kết thúc trò chơi
-                if (CheckWin(row, col))
+                if (CheckWin() == 1)
                 {
                     string winner = isPlayer1Turn ? "Player 2" : "Player 1";
                     MessageBox.Show(winner + " has won the game!");
@@ -155,91 +155,52 @@ namespace Caro
                 }
             }
         }
-        private bool CheckWin(int row, int col)
+        private int CheckWin()
         {
-            int player = isPlayer1Turn ? 1 : 2;
-
-            // Kiểm tra hàng ngang
-            int count = 1;
-            int i = row;
-            int j = col - 1;
-            while (j >= 0 && board[i, j] == player)
-            {
-                count++;
-                j--;
-            }
-            i = row;
-            j = col + 1;
-            while (j < BoardSizeN && board[i, j] == player)
-            {
-                count++;
-                j++;
-            }
-            if (count >= 5)
-                return true;
-
-            // Kiểm tra hàng dọc
-            count = 1;
-            i = row - 1;
-            j = col;
-            while (i >= 0 && board[i, j] == player)
-            {
-                count++;
-                i--;
-            }
-            i = row + 1;
-            j = col;
-            while (i < BoardSizeM && board[i, j] == player)
-            {
-                count++;
-                i++;
-            }
-            if (count >= 5)
-                return true;
-
-            // Kiểm tra đường chéo chính (\)
-            count = 1;
-            i = row - 1;
-            j = col - 1;
-            while (i >= 0 && j >= 0 && board[i, j] == player)
-            {
-                count++;
-                i--;
-                j--;
-            }
-            i = row + 1;
-            j = col + 1;
-            while (i < BoardSizeM && j < BoardSizeN && board[i, j] == player)
-            {
-                count++;
-                i++;
-                j++;
-            }
-            if (count >= 5)
-                return true;
-
-            // Kiểm tra đường chéo phụ (/)
-            count = 1;
-            i = row - 1;
-            j = col + 1;
-            while (i >= 0 && j < BoardSizeN && board[i, j] == player)
-            {
-                count++;
-                i--;
-                j++;
-            }
-            i = row + 1;
-            j = col - 1;
-            while (i < BoardSizeM && j >= 0 && board[i, j] == player)
-            {
-                count++;
-                i++;
-                j--;
-            }
-            if (count >= 5)
-                return true;
-
-            return false;
+            char c;
+            int d;
+            for (int i = 0; i < BoardSizeM; i++)
+                for (int j = 0; j < BoardSizeN; j++)
+                    if (board[i,j] != 0)
+                    {
+                        if (i + 5 < BoardSizeM 
+                                       && board[i, j] == board[i + 1, j] 
+                                       && board[i, j] == board[i + 2, j] 
+                                       && board[i, j] == board[i + 3, j] 
+                                       && board[i, j] == board[i + 4, j]
+                            && i - 1 >= 0)
+                        {
+                            return board[i, j];
+                        }
+                        if (j + 5 < BoardSizeN 
+                                && board[i, j] == board[i, j + 1] 
+                                && board[i, j] == board[i, j + 2] 
+                                && board[i, j] == board[i, j + 3] 
+                                && board[i, j] == board[i, j + 4]
+                            && j - 1 >= 0)
+                        {
+                            return board[i, j];
+                        }
+                        if (i + 5 < BoardSizeM && j + 5 < BoardSizeN 
+                            && board[i, j] == board[i + 1, j + 1] 
+                            && board[i, j] == board[i + 2, j + 2] 
+                            && board[i, j] == board[i + 3, j + 3] 
+                            && board[i, j] == board[i + 4, j + 4]
+                            && i - 1 >= 0 && j - 1 >= 0)
+                        {
+                            return board[i, j];
+                        }
+                        if (i + 5 < BoardSizeM && j - 4 >= 0 
+                            && board[i, j] == board[i + 1, j - 1] 
+                            && board[i, j] == board[i + 2, j - 2] 
+                            && board[i, j] == board[i + 3, j - 3] 
+                            && board[i, j] == board[i + 4, j - 4]
+                            && i > 0 && j < BoardSizeN)
+                        {
+                            return board[i, j];
+                        }
+                    }
+            return 0;
         }
         private void Form3_Load(object sender, EventArgs e)
         {
