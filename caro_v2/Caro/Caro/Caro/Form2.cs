@@ -27,6 +27,7 @@ namespace Caro
 
         private void btnPlayer_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             Form3 form3 = new Form3();
             this.Hide();
             form3.ShowDialog();
@@ -35,6 +36,7 @@ namespace Caro
 
         private void btnBoot_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             Form4 form4 = new Form4();
             this.Hide();
             form4.ShowDialog();
@@ -42,12 +44,14 @@ namespace Caro
         }
         private void btnBasic_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.level = 0;
             SetColorLV();
         }
 
         private void btnAdvanced_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.level = 1;
             SetColorLV();
         }
@@ -55,18 +59,23 @@ namespace Caro
 
         private void onToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.audio = 0;
+            GameManager.Instance.PlayBackgroundMusic();
             SetColorAudio();
         }
 
         private void offToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.audio = 1;
+            GameManager.Instance.StopBackgroundMusic();
             SetColorAudio();
         }
 
         private void btnTV_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.language = 0;
             SetLaguage();
             SetColorLanguage();
@@ -74,6 +83,7 @@ namespace Caro
 
         private void btnTA_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             GameManager.Instance.language = 1;
             SetLaguage();
             SetColorLanguage();
@@ -130,6 +140,26 @@ namespace Caro
                 this.btnTA.ForeColor = GameManager.Instance.colorLight;
                 this.btnTV.ForeColor = GameManager.Instance.colorDefault;
             }
+        }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            GameManager.Instance.PlaySoundEffect(1);
+        }
+
+        private void btnAudio_Click(object sender, EventArgs e)
+        {
+            GameManager.Instance.PlaySoundEffect(1);
+        }
+
+        private void btnLanguage_Click(object sender, EventArgs e)
+        {
+            GameManager.Instance.PlaySoundEffect(1);
+        }
+
+        private void btnMenuLevel_Click(object sender, EventArgs e)
+        {
+            GameManager.Instance.PlaySoundEffect(1);
         }
     }
 }

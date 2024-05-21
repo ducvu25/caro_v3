@@ -19,11 +19,13 @@ namespace Caro
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            GameManager.Instance.LoadAudio();
+            GameManager.Instance.PlayBackgroundMusic();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             if (this.itxtName.Text == null || this.itxtName.Text.Length == 0) return;
             GameManager.Instance.namePlayer = this.itxtName.Text.ToString();
             this.Hide();
@@ -36,5 +38,6 @@ namespace Caro
             this.label1.Text = GameManager.Instance.txtTitle[(int)TITLE_FORM.f1Title, GameManager.Instance.language];
             this.btnStart.Text = GameManager.Instance.txtTitle[(int)TITLE_FORM.f1Start, GameManager.Instance.language];
         }
+
     }
 }

@@ -43,7 +43,7 @@
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.itxtName);
             this.panel3.Location = new System.Drawing.Point(433, 224);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(290, 199);
             this.panel3.TabIndex = 2;
@@ -54,7 +54,7 @@
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.btnStart.Location = new System.Drawing.Point(185, 161);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(102, 38);
             this.btnStart.TabIndex = 2;
@@ -79,7 +79,7 @@
             // 
             this.itxtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.itxtName.Location = new System.Drawing.Point(16, 86);
-            this.itxtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.itxtName.Margin = new System.Windows.Forms.Padding(2);
             this.itxtName.Name = "itxtName";
             this.itxtName.Size = new System.Drawing.Size(210, 37);
             this.itxtName.TabIndex = 0;
@@ -89,7 +89,7 @@
             this.panel2.BackgroundImage = global::Caro.Properties.Resources.img_main;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel2.Location = new System.Drawing.Point(26, 19);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(465, 197);
             this.panel2.TabIndex = 1;
@@ -99,7 +99,7 @@
             this.panel1.BackgroundImage = global::Caro.Properties.Resources.xo;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Location = new System.Drawing.Point(130, 228);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(220, 195);
             this.panel1.TabIndex = 0;
@@ -114,7 +114,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

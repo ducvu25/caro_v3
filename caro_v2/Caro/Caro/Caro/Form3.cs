@@ -121,6 +121,7 @@ namespace Caro
         }
         private void Form3_MouseClick(object sender, MouseEventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(0);
             int col = (e.X - Margin2) / CellSize;
             int row = (e.Y - Margin2) / CellSize;
             if (col >= 0 && col < BoardSizeN && row >= 0 && row < BoardSizeM && board[row, col] == 0)
@@ -256,6 +257,7 @@ namespace Caro
         }
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             if (isPlayer1Turn)
                 timerPlayer1.Stop();
             else
@@ -263,13 +265,15 @@ namespace Caro
         }
         void continueClick(object sender, EventArgs e)
         {
-            if(isPlayer1Turn)
+            GameManager.Instance.PlaySoundEffect(1);
+            if (isPlayer1Turn)
                 timerPlayer1.Start();
             else
                 timerPlayer2.Start();
         }
         void quitClick(object sender, EventArgs e)
         {
+            GameManager.Instance.PlaySoundEffect(1);
             this.Close();
         }
         private void panel2_Paint(object sender, PaintEventArgs e)

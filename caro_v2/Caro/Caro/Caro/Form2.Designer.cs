@@ -108,7 +108,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(344, 410);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(94, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(214, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu";
             // 
@@ -123,6 +123,7 @@
             this.btnMenuLevel.Name = "btnMenuLevel";
             this.btnMenuLevel.Size = new System.Drawing.Size(88, 26);
             this.btnMenuLevel.Text = "Cấp độ";
+            this.btnMenuLevel.Click += new System.EventHandler(this.btnMenuLevel_Click);
             // 
             // btnBasic
             // 
@@ -161,7 +162,7 @@
             this.menuStrip3.Location = new System.Drawing.Point(731, 29);
             this.menuStrip3.Name = "menuStrip3";
             this.menuStrip3.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip3.Size = new System.Drawing.Size(154, 24);
+            this.menuStrip3.Size = new System.Drawing.Size(34, 24);
             this.menuStrip3.TabIndex = 3;
             this.menuStrip3.Text = "menuStrip3";
             // 
@@ -175,6 +176,7 @@
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(28, 20);
             this.btnSetting.Text = "   ";
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // btnAudio
             // 
@@ -187,12 +189,13 @@
             this.btnAudio.Name = "btnAudio";
             this.btnAudio.Size = new System.Drawing.Size(180, 24);
             this.btnAudio.Text = "Âm thanh";
+            this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
             // 
             // onToolStripMenuItem
             // 
             this.onToolStripMenuItem.BackColor = System.Drawing.Color.LightSeaGreen;
             this.onToolStripMenuItem.Name = "onToolStripMenuItem";
-            this.onToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.onToolStripMenuItem.Size = new System.Drawing.Size(100, 24);
             this.onToolStripMenuItem.Text = "On";
             this.onToolStripMenuItem.Click += new System.EventHandler(this.onToolStripMenuItem_Click);
             // 
@@ -200,7 +203,7 @@
             // 
             this.offToolStripMenuItem.BackColor = System.Drawing.Color.LightSeaGreen;
             this.offToolStripMenuItem.Name = "offToolStripMenuItem";
-            this.offToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.offToolStripMenuItem.Size = new System.Drawing.Size(100, 24);
             this.offToolStripMenuItem.Text = "Off";
             this.offToolStripMenuItem.Click += new System.EventHandler(this.offToolStripMenuItem_Click);
             // 
@@ -215,12 +218,13 @@
             this.btnLanguage.Name = "btnLanguage";
             this.btnLanguage.Size = new System.Drawing.Size(180, 24);
             this.btnLanguage.Text = "Ngôn ngữ";
+            this.btnLanguage.Click += new System.EventHandler(this.btnLanguage_Click);
             // 
             // btnTV
             // 
             this.btnTV.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnTV.Name = "btnTV";
-            this.btnTV.Size = new System.Drawing.Size(180, 24);
+            this.btnTV.Size = new System.Drawing.Size(155, 24);
             this.btnTV.Text = "Tiếng Việt";
             this.btnTV.Click += new System.EventHandler(this.btnTV_Click);
             // 
@@ -228,7 +232,7 @@
             // 
             this.btnTA.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnTA.Name = "btnTA";
-            this.btnTA.Size = new System.Drawing.Size(180, 24);
+            this.btnTA.Size = new System.Drawing.Size(155, 24);
             this.btnTA.Text = "Tiếng Anh";
             this.btnTA.Click += new System.EventHandler(this.btnTA_Click);
             // 

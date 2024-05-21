@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Media;
+using WMPLib;
 public enum TITLE_FORM
 {
     // f1
@@ -69,6 +67,39 @@ namespace Caro
             {"Tiếp tục", "Contiune" },
             {"Màn hình chính", "Menu" },
         };
+        private SoundPlayer backgroundMusic;
+        private WindowsMediaPlayer[] soundEffectPlayers = new WindowsMediaPlayer[2];
 
+        public void LoadAudio()
+        {
+            string path = "C:\\Learn\\caro_v3\\caro_v2\\Caro\\Caro\\Caro\\Resources\\Audio\\";
+
+            // Nạp nhạc nền
+            backgroundMusic = new SoundPlayer(path + "a_BG.wav");
+
+            // Nạp hiệu ứng âm thanh
+            soundEffectPlayers[0] = new WindowsMediaPlayer();
+            soundEffectPlayers[0].URL = path + "a_pop.wav";
+
+            soundEffectPlayers[1] = new WindowsMediaPlayer();
+            soundEffectPlayers[1].URL = path + "a_click.wav";
+        }
+
+        public void PlayBackgroundMusic()
+        {
+            backgroundMusic.PlayLooping();
+        }
+
+        public void PlaySoundEffect(int index)
+        {
+            if (audio == 1) return;
+            soundEffectPlayers[index].controls.stop();  // Ensure it starts from the beginning
+            soundEffectPlayers[index].controls.play();
+        }
+
+        public void StopBackgroundMusic()
+        {
+            backgroundMusic.Stop();
+        }
     }
 }

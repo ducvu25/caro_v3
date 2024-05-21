@@ -61,3 +61,5 @@ C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Caro.csproj.GenerateResource.c
 C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Caro.csproj.CoreCompileInputs.cache
 C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Caro.exe
 C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Caro.pdb
+C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Interop.WMPLib.dll
+C:\Learn\caro_v3\caro_v2\Caro\Caro\Caro\obj\Debug\Caro.csproj.ResolveComReference.cache
