@@ -17,19 +17,14 @@ namespace Caro
         int timePlayer2;
         Timer timerPlayer1;
         Timer timerPlayer2;
-        int BoardSizeM = 15;
-        int BoardSizeN = 34;
+        
         int CellSize = 20;
         int LineThickness = 2;
         int Margin2 = 15;
 
-        long[] TC1 = { 0, 2, 3, 8, 100, 12288, 98304 };
-        long[] PN1 = { 0, 1, 9, 12, 210, 600, 59999 };
-        long[] TC2 = { 0, 3, 5, 81, 2810, 12200, 90304 };
-        long[] PN2 = { 0, 1, 9, 200, 729, 6561, 59999 };
         int xBot, yBot;
-        int[,] board;
-        bool luotPlayer = true;
+        
+        
 
         public Form4()
         {
@@ -50,10 +45,10 @@ namespace Caro
             timerPlayer2.Interval = 1000; // Đặt khoảng thời gian là 1 giây
             timerPlayer2.Tick += TimerPlayer2_Tick;
 
-            xBot = BoardSizeM / 2;
-            yBot = BoardSizeN / 2;
+            xBot = GameManager.Instance.BoardSizeM / 2;
+            yBot = GameManager.Instance.BoardSizeN / 2;
 
-            if (luotPlayer)
+            if (GameManager.Instance.isPlayer1)
             {
                 PlayerAttack();
             }
@@ -64,28 +59,28 @@ namespace Caro
         }
         void PlayerAttack()
         {
-            luotPlayer = true;
+            GameManager.Instance.isPlayer1 = true;
             timerPlayer1.Start();
             timerPlayer2.Stop();
             this.txtMess.Text = this.txtNamePlayer1.Text;
         }
         void BotAttack()
         {
-            luotPlayer = false;
+            GameManager.Instance.isPlayer1 = false;
             timerPlayer1.Stop();
             timerPlayer2.Start();
             this.txtMess.Text = this.txtNamePlayer2.Text;
             if (GameManager.Instance.level == 0)
-                Bot(board, ref xBot, ref yBot, TC1, PN1, 1);
+                GameManager.Instance.Bot(GameManager.Instance.board, ref xBot, ref yBot, GameManager.Instance.TC1, GameManager.Instance.PN1, 1);
             else
-                Bot(board, ref xBot, ref yBot, TC2, PN2, 1);
-            board[xBot, yBot] = 2;
+                GameManager.Instance.Bot(GameManager.Instance.board, ref xBot, ref yBot, GameManager.Instance.TC2, GameManager.Instance.PN2, 1);
+            GameManager.Instance.board[xBot, yBot] = 2;
             using (Graphics g = panel2.CreateGraphics())
             {
                 DrawPiece(g, xBot, yBot, Color.Blue);
             }
             timerPlayer2.Stop();
-            if (CheckWin() == 2)
+            if (GameManager.Instance.CheckWin() == 2)
             {
                 string winner = "YOU LOSS";
                 MessageBox.Show(winner);
@@ -122,32 +117,26 @@ namespace Caro
         }
         private void InitializeBoard()
         {
-            board = new int[BoardSizeM, BoardSizeN];
-            for (int i = 0; i < BoardSizeM; i++)
-            {
-                for (int j = 0; j < BoardSizeN; j++)
-                {
-                    board[i, j] = 0;
-                }
-            }
+            
             using (Graphics g = panel2.CreateGraphics())
             {
                 DrawBoard(g);
             }
-            luotPlayer = true;
+            GameManager.Instance.isPlayer1 = true;
+            GameManager.Instance.NewGame();
         }
         private void DrawBoard(Graphics g)
         {
             g.Clear(Color.White);
 
             // Vẽ các đường ngang và đứng trên bàn cờ
-            for (int i = 0; i <= BoardSizeM; i++)
+            for (int i = 0; i <= GameManager.Instance.BoardSizeM; i++)
             {
-                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2, Margin2 + i * CellSize, Margin2 + BoardSizeN * CellSize, Margin2 + i * CellSize);
+                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2, Margin2 + i * CellSize, Margin2 + GameManager.Instance.BoardSizeN * CellSize, Margin2 + i * CellSize);
             }
-            for (int i = 0; i <= BoardSizeN; i++)
+            for (int i = 0; i <= GameManager.Instance.BoardSizeN; i++)
             {
-                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2 + i * CellSize, Margin2, Margin2 + i * CellSize, Margin2 + BoardSizeM * CellSize);
+                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2 + i * CellSize, Margin2, Margin2 + i * CellSize, Margin2 + GameManager.Instance.BoardSizeM * CellSize);
             }
         }
         private void DrawPiece(Graphics g, int row, int col, Color color)
@@ -159,18 +148,18 @@ namespace Caro
         private void Form3_MouseClick(object sender, MouseEventArgs e)
         {
             GameManager.Instance.PlaySoundEffect(0);
-            if (!luotPlayer) return;
+            if (!GameManager.Instance.isPlayer1) return;
             int col = (e.X - Margin2) / CellSize;
             int row = (e.Y - Margin2) / CellSize;
-            if (col >= 0 && col < BoardSizeN && row >= 0 && row < BoardSizeM && board[row, col] == 0)
+            if (col >= 0 && col < GameManager.Instance.BoardSizeN && row >= 0 && row < GameManager.Instance.BoardSizeM && GameManager.Instance.board[row, col] == 0)
             {
-                board[row, col] = 1;
+                GameManager.Instance.board[row, col] = 1;
                 using (Graphics g = panel2.CreateGraphics())
                 {
                     DrawPiece(g, row, col, Color.Red);
                 }
                 // Kiểm tra kết thúc trò chơi
-                if (CheckWin() == 1)
+                if (GameManager.Instance.CheckWin() == 1)
                 {
                     MessageBox.Show("YOU WIN!");
                     InitializeBoard();
@@ -178,53 +167,6 @@ namespace Caro
                 }
                 BotAttack();
             }
-        }
-        private int CheckWin()
-        {
-            char c;
-            int d;
-            for (int i = 0; i < BoardSizeM; i++)
-                for (int j = 0; j < BoardSizeN; j++)
-                    if (board[i, j] != 0)
-                    {
-                        if (i + 5 < BoardSizeM
-                                       && board[i, j] == board[i + 1, j]
-                                       && board[i, j] == board[i + 2, j]
-                                       && board[i, j] == board[i + 3, j]
-                                       && board[i, j] == board[i + 4, j]
-                            && i - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (j + 5 < BoardSizeN
-                                && board[i, j] == board[i, j + 1]
-                                && board[i, j] == board[i, j + 2]
-                                && board[i, j] == board[i, j + 3]
-                                && board[i, j] == board[i, j + 4]
-                            && j - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (i + 5 < BoardSizeM && j + 5 < BoardSizeN
-                            && board[i, j] == board[i + 1, j + 1]
-                            && board[i, j] == board[i + 2, j + 2]
-                            && board[i, j] == board[i + 3, j + 3]
-                            && board[i, j] == board[i + 4, j + 4]
-                            && i - 1 >= 0 && j - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (i + 5 < BoardSizeM && j - 4 >= 0
-                            && board[i, j] == board[i + 1, j - 1]
-                            && board[i, j] == board[i + 2, j - 2]
-                            && board[i, j] == board[i + 3, j - 3]
-                            && board[i, j] == board[i + 4, j - 4]
-                            && i > 0 && j < BoardSizeN)
-                        {
-                            return board[i, j];
-                        }
-                    }
-            return 0;
         }
         private void Form4_Load(object sender, EventArgs e)
         {
@@ -244,7 +186,7 @@ namespace Caro
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             GameManager.Instance.PlaySoundEffect(1);
-            if (luotPlayer)
+            if (GameManager.Instance.isPlayer1)
                 timerPlayer1.Stop();
             else
                 timerPlayer2.Stop();
@@ -252,7 +194,7 @@ namespace Caro
         void continueClick(object sender, EventArgs e)
         {
             GameManager.Instance.PlaySoundEffect(1);
-            if (luotPlayer)
+            if (GameManager.Instance.isPlayer1)
                 timerPlayer1.Start();
             else
                 timerPlayer2.Start();
@@ -265,148 +207,6 @@ namespace Caro
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             DrawBoard(e.Graphics);
-        }
-
-        
-        long DiemTC(int x, int y, int[,] a, long[] TC, long[] PN, int u, int v, int player)
-        {
-            long diemTong = 0;
-            int ta = 0, dich = 0;
-            if (u == -1 && v == 1)
-            {
-                for (int i = 1; i < 6 && y + i < BoardSizeN && x - i >= 0; i++)
-                    if (a[x - i, y + i] == player)
-                    {
-                        ta++;
-                    }
-                    else if (a[x - i, y + i] == -player)
-                    {
-                        dich++;
-                        break;
-                    }
-                    else break;
-
-                for (int i = 1; i < 6 && x + i < BoardSizeM && y - i >= 0; i++)
-                    if (a[x + i, y - i] == player)
-                    {
-                        ta++;
-                    }
-                    else if (a[x + i, y - i] == -player)
-                    {
-                        dich++;
-                        break;
-                    }
-                    else break;
-            }
-            else
-            {
-                for (int i = 1; i < 6 && y + v * i < BoardSizeN && x + u * i < BoardSizeM; i++)
-                    if (a[x + u * i, y + v * i] == player)
-                    {
-                        ta++;
-                    }
-                    else if (a[x + u * i, y + v * i] == -player)
-                    {
-                        dich++;
-                        break;
-                    }
-                    else break;
-
-                for (int i = 1; i < 6 && y - v * i >= 0 && x - u * i >= 0; i++)
-                    if (a[x - u * i, y - v * i] == 1)
-                    {
-                        ta++;
-                    }
-                    else if (a[x - u * i, y - v * i] == -1)
-                    {
-                        dich++;
-                        break;
-                    }
-                    else break;
-            }
-            if (dich == 2) return 0;
-            diemTong -= PN[dich + 1];
-            diemTong += TC[ta];
-            return diemTong;
-        }
-        long DiemPN(int x, int y, int[,] a, long[] TC, long[] PN, int u, int v, int player)
-        {
-            long diemTong = 0;
-            int ta = 0, dich = 0;
-            if (u == -1 && v == 1)
-            {
-                for (int i = 1; i < 6 && y + i < BoardSizeN && x - i >= 0; i++)
-                    if (a[x - i, y + i] == player)
-                    {
-                        ta++;
-                        break;
-                    }
-                    else if (a[x - i, y + i] == -player)
-                    {
-                        dich++;
-                    }
-                    else break;
-
-                for (int i = 1; i < 6 && y - i >= 0 && x + i < BoardSizeM; i++)
-                    if (a[x + i, y - i] == player)
-                    {
-                        ta++;
-                        break;
-                    }
-                    else if (a[x + i, y - i] == -player)
-                    {
-                        dich++;
-                    }
-                    else break;
-            }
-            else
-            {
-                for (int i = 1; i < 6 && y + v * i < BoardSizeN && x + u * i < BoardSizeM; i++)
-                    if (a[x + u * i, y + v * i] == player)
-                    {
-                        ta++;
-                        break;
-                    }
-                    else if (a[x + u * i, y + v * i] == -player)
-                    {
-                        dich++;
-                    }
-                    else break;
-
-                for (int i = 1; i < 6 && y - v * i >= 0 && x - u * i >= 0; i++)
-                    if (a[x - u * i, y - v * i] == player)
-                    {
-                        ta++;
-                        break;
-                    }
-                    else if (a[x - u * i, y - v * i] == -player)
-                    {
-                        dich++;
-                    }
-                    else break;
-            }
-            if (ta == 2) return 0;
-            diemTong += PN[dich];
-            return diemTong;
-        }
-
-        void Bot(int[,] a, ref int x, ref int y, long[] TC, long[] PN, int player)
-        {
-            long max = 0;
-            for (int i = 0; i < BoardSizeM; i++)
-                for (int j = 0; j < BoardSizeN; j++)
-                    if (a[i,j] == 0)
-                    {
-                        long AT = DiemTC(i, j, a, TC, PN, 0, 1, player) + DiemTC(i, j, a, TC, PN, 1, 0, player) + DiemTC(i, j, a, TC, PN, 1, 1, player) + DiemTC(i, j, a, TC, PN, -1, 1, player);
-                        long DF = DiemPN(i, j, a, TC, PN, 0, 1, player) + DiemPN(i, j, a, TC, PN, 1, 0, player) + DiemPN(i, j, a, TC, PN, 1, 1, player) + DiemPN(i, j, a, TC, PN, -1, 1, player);
-                        long diem = AT > DF ? AT : DF;
-                        if (max < diem)
-                        {
-                            max = diem;
-                            x = i;
-                            y = j;
-                        }
-                    }
         }
     }
 }

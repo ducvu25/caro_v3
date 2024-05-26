@@ -17,14 +17,10 @@ namespace Caro
         int timePlayer2;
         Timer timerPlayer1;
         Timer timerPlayer2;
-        int BoardSizeM = 15;
-        int BoardSizeN = 34;
         int CellSize = 20;
         int LineThickness = 2;
         int Margin2 = 15;
 
-        int[,] board;
-        bool isPlayer1Turn;
 
         public Form3()
         {
@@ -45,7 +41,7 @@ namespace Caro
             timerPlayer2.Interval = 1000; // Đặt khoảng thời gian là 1 giây
             timerPlayer2.Tick += TimerPlayer2_Tick;
 
-            if (isPlayer1Turn)
+            if (GameManager.Instance.isPlayer1)
             {
                 timerPlayer1.Start();
                 this.txtMess.Text = this.txtNamePlayer1.Text;
@@ -85,32 +81,25 @@ namespace Caro
         }
         private void InitializeBoard()
         {
-            board = new int[BoardSizeM, BoardSizeN];
-            for (int i = 0; i < BoardSizeM; i++)
-            {
-                for (int j = 0; j < BoardSizeN; j++)
-                {
-                    board[i, j] = 0;
-                }
-            }
+            GameManager.Instance.NewGame();
             using (Graphics g = panel2.CreateGraphics())
             {
                 DrawBoard(g);
             }
-            isPlayer1Turn = true;
+            GameManager.Instance.isPlayer1 = true;
         }
         private void DrawBoard(Graphics g)
         {
             g.Clear(Color.White);
 
             // Vẽ các đường ngang và đứng trên bàn cờ
-            for (int i = 0; i <= BoardSizeM; i++)
+            for (int i = 0; i <= GameManager.Instance.BoardSizeM; i++)
             {
-                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2, Margin2 + i * CellSize, Margin2 + BoardSizeN * CellSize, Margin2 + i * CellSize);
+                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2, Margin2 + i * CellSize, Margin2 + GameManager.Instance.BoardSizeN * CellSize, Margin2 + i * CellSize);
             }
-            for (int i = 0; i <= BoardSizeN; i++)
+            for (int i = 0; i <= GameManager.Instance.BoardSizeN; i++)
             {
-                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2 + i * CellSize, Margin2, Margin2 + i * CellSize, Margin2 + BoardSizeM * CellSize);
+                g.DrawLine(new Pen(Color.Black, LineThickness), Margin2 + i * CellSize, Margin2, Margin2 + i * CellSize, Margin2 + GameManager.Instance.BoardSizeM * CellSize);
             }
         }
         private void DrawPiece(Graphics g, int row, int col, Color color)
@@ -124,13 +113,13 @@ namespace Caro
             GameManager.Instance.PlaySoundEffect(0);
             int col = (e.X - Margin2) / CellSize;
             int row = (e.Y - Margin2) / CellSize;
-            if (col >= 0 && col < BoardSizeN && row >= 0 && row < BoardSizeM && board[row, col] == 0)
+            if (col >= 0 && col < GameManager.Instance.BoardSizeN && row >= 0 && row < GameManager.Instance.BoardSizeM && GameManager.Instance.board[row, col] == 0)
             {
-                board[row, col] = isPlayer1Turn ? 1 : 2;
-                isPlayer1Turn = !isPlayer1Turn;
+                GameManager.Instance.board[row, col] = GameManager.Instance.isPlayer1 ? 1 : 2;
+                GameManager.Instance.isPlayer1 = !GameManager.Instance.isPlayer1;
                 using (Graphics g = panel2.CreateGraphics())
                 {
-                    if (isPlayer1Turn)
+                    if (GameManager.Instance.isPlayer1)
                     {
                         DrawPiece(g, row, col, Color.Red);
                         timerPlayer2.Stop();
@@ -146,62 +135,16 @@ namespace Caro
                     }
                 }
                 // Kiểm tra kết thúc trò chơi
-                if (CheckWin() == 1)
+                if (GameManager.Instance.CheckWin() == 1)
                 {
-                    string winner = isPlayer1Turn ? "Player 2" : "Player 1";
+                    string winner = GameManager.Instance.isPlayer1 ? "Player 2" : "Player 1";
                     MessageBox.Show(winner + " has won the game!");
                     InitializeBoard();
                     Invalidate();
                 }
             }
         }
-        private int CheckWin()
-        {
-            char c;
-            int d;
-            for (int i = 0; i < BoardSizeM; i++)
-                for (int j = 0; j < BoardSizeN; j++)
-                    if (board[i,j] != 0)
-                    {
-                        if (i + 5 < BoardSizeM 
-                                       && board[i, j] == board[i + 1, j] 
-                                       && board[i, j] == board[i + 2, j] 
-                                       && board[i, j] == board[i + 3, j] 
-                                       && board[i, j] == board[i + 4, j]
-                            && i - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (j + 5 < BoardSizeN 
-                                && board[i, j] == board[i, j + 1] 
-                                && board[i, j] == board[i, j + 2] 
-                                && board[i, j] == board[i, j + 3] 
-                                && board[i, j] == board[i, j + 4]
-                            && j - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (i + 5 < BoardSizeM && j + 5 < BoardSizeN 
-                            && board[i, j] == board[i + 1, j + 1] 
-                            && board[i, j] == board[i + 2, j + 2] 
-                            && board[i, j] == board[i + 3, j + 3] 
-                            && board[i, j] == board[i + 4, j + 4]
-                            && i - 1 >= 0 && j - 1 >= 0)
-                        {
-                            return board[i, j];
-                        }
-                        if (i + 5 < BoardSizeM && j - 4 >= 0 
-                            && board[i, j] == board[i + 1, j - 1] 
-                            && board[i, j] == board[i + 2, j - 2] 
-                            && board[i, j] == board[i + 3, j - 3] 
-                            && board[i, j] == board[i + 4, j - 4]
-                            && i > 0 && j < BoardSizeN)
-                        {
-                            return board[i, j];
-                        }
-                    }
-            return 0;
-        }
+
         private void Form3_Load(object sender, EventArgs e)
         {
 
@@ -219,7 +162,7 @@ namespace Caro
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             GameManager.Instance.PlaySoundEffect(1);
-            if (isPlayer1Turn)
+            if (GameManager.Instance.isPlayer1)
                 timerPlayer1.Stop();
             else
                 timerPlayer2.Stop();
@@ -227,7 +170,7 @@ namespace Caro
         void continueClick(object sender, EventArgs e)
         {
             GameManager.Instance.PlaySoundEffect(1);
-            if (isPlayer1Turn)
+            if (GameManager.Instance.isPlayer1)
                 timerPlayer1.Start();
             else
                 timerPlayer2.Start();
